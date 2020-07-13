@@ -106,3 +106,19 @@ export function getQueryString(name) {
   }
   return null;
 }
+
+/**
+ * 置顶函数
+ * @param {number} step 单位时间上滑的距离
+ * @param {number} time 单位时间,单位:毫秒
+ */
+export function toTop(step, time) {
+  document.documentElement.scrollTop -= time;
+  document.body.scrollTop -= time;
+  let timer;
+  if (document.documentElement.scrollTop > 0 || document.body.scrollTop > 0) {
+    timer = setTimeout(() => this.toTop(i), step);
+  } else {
+    clearTimeout(timer);
+  }
+}
