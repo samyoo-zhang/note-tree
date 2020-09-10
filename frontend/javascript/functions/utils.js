@@ -159,5 +159,47 @@ export function numberToChinese(str) {
  */
 export function cancelMark(str) {
   const reg = /<[a-z0-9]*?>/ig;
-  str.replace(reg, '');
+  return str.replace(reg, '');
+}
+
+/**
+ * 格式化时间 时分秒
+ * @param {string} val  时间戳,秒
+ */
+export function clockFmt(val) {
+  let seconds = val % 60 || 0;
+  let minutes = Math.floor((val / 60) % 60) || 0;
+  let hours = Math.floor(val / 60 / 60) || 0;
+  seconds < 10 ? '0' + seconds : seconds;
+  return `${hours < 10 ? '0' + hours : hours}:${
+    minutes < 10 ? '0' + minutes : minutes
+    }:${seconds < 10 ? '0' + seconds : seconds}`;
+}
+
+/**
+ * 深拷贝
+ * @param {Array|Object} obj  深拷贝的对象
+ * @param {Number} level 所需拷贝的层级,-1为不限制拷贝层级全量复制
+ */
+export function deepClone(obj, level = -1) {
+  if (!obj && typeof obj !== 'object') {
+    throw new Error('error arguments', 'deepClone');
+  }
+  const newObj = obj.constructor === Array ? [] : {};
+  Object.keys(obj).forEach(keys => {
+    if (obj[keys] && typeof obj[keys] === 'object') {
+      /**
+       * 当level大于等于0时,限制复制层级(防止冗余的深复制导致内存溢出)
+       * 当level小于0时,不限制复制的层级
+       **/
+      if (level === 0) {
+        return newObj;
+      } else {
+        newObj[keys] = deepClone(obj[keys], level - 1);
+      }
+    } else {
+      newObj[keys] = obj[keys];
+    }
+  });
+  return newObj;
 }

@@ -35,3 +35,22 @@ export function windowDragEvent(target) {
         this.isDrag = false;
     });
 }
+
+/**
+ * window跳至锚点
+ * @param {*} node 
+ */
+export function jump(anchor) {
+    let jumpDom = document.querySelectorAll(anchor);
+    jumpDom[0].scrollIntoView();
+}
+
+/**
+ * 局部dom跳至锚点
+ * @param {*} scrollBox 
+ * @param {*} anchor 
+ */
+export function jump2(scrollBox, anchor) {
+    let jumpDom = document.getElementById(anchor);
+    scrollBox.scrollTop = jumpDom.offsetTop
+}
